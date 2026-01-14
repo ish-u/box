@@ -1,0 +1,12 @@
+app
+*.o
+
+build/
+
+.nvim/
+
+.DS_Store
+.cache
+
+compile_commands.json
+
