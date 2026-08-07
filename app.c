@@ -17,7 +17,7 @@ int main(void)
         BeginDrawing();
         ClearBackground(WHITE);
 
-        int radius = 100;
+        int radius = 400;
         int x = radius * cos(GetTime() * 2);
         int y = -radius * sin(GetTime() * 2);
         x += GetScreenWidth()/2;
