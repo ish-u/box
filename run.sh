@@ -4,7 +4,7 @@
 APP_PID=$!
 
 cd web_server
-uv run main.py &
+uv run main.py </dev/null &
 SERVER_PID=$!
 
 wait $APP_PID
