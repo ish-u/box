@@ -10,8 +10,6 @@ if [[ "$(uname)" != "Darwin" ]]; then
     GPIO_PID=$!
 fi
 
-sleep 5
-
 ./app
 
 if [[ -n "$GPIO_PID" ]]; then
