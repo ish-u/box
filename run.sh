@@ -1,12 +1,9 @@
 #!/bin/bash
 
-./app &
-APP_PID=$!
-
-cd web_server
-uv run main.py </dev/null &
+uv --directory web_server run main.py &
 SERVER_PID=$!
 
-wait $APP_PID
+./app
 
-kill $SERVER_PID
+kill "$SERVER_PID" 2>/dev/null
+wait "$SERVER_PID" 2>/dev/null
