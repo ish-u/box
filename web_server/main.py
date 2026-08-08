@@ -23,7 +23,7 @@ def next_sketch():
 
 @app.get("/prev")
 def previous_sketch():
-    send_command("NEXT")
+    send_command("PREV")
     return {"ok": True}
 
 if __name__ == "__main__":
