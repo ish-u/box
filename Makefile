@@ -1,5 +1,5 @@
 TARGET = app
-SRC    = app.c
+SRC    = app.c $(wildcard sketches/*.c)
 
 UNAME_S := $(shell uname -s)
 

@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "sketches.h"
 #include <math.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -8,29 +9,6 @@
 #include <errno.h>
 
 int CURRENT_SKETCH = 0;
-#define TOTAL_SKETCHES 2
-
-void SKETCH_1()
-{
-    ClearBackground(WHITE);
-    int radius = 200;
-    int x = radius * cos(GetTime() * 2);
-    int y = -radius * sin(GetTime() * 2);
-    x += GetScreenWidth() / 2;
-    y += GetScreenHeight() / 2;
-    DrawCircle(x, y, 20, BLACK);
-}
-
-void SKETCH_2()
-{
-    ClearBackground(BLACK);
-    int radius = 200;
-    int x = radius * cos(GetTime() * 2);
-    int y = -radius * sin(GetTime() * 2);
-    x += GetScreenWidth() / 2;
-    y += GetScreenHeight() / 2;
-    DrawCircle(x, y, 20, WHITE);
-}
 
 int main(void)
 {
@@ -76,17 +54,7 @@ int main(void)
 
         // Sketch Switch
         BeginDrawing();
-        switch (CURRENT_SKETCH)
-        {
-        case 0:
-            SKETCH_1();
-            break;
-        case 1:
-            SKETCH_2();
-            break;
-        default:
-            break;
-        }
+        SKETCHES[CURRENT_SKETCH]();
         EndDrawing();
     }
 
