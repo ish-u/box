@@ -3,6 +3,9 @@ app
 
 build/
 
+include/
+lib/
+
 .nvim/
 
 .DS_Store
