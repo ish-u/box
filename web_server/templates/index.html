@@ -1,34 +1,50 @@
 <!doctype html>
 <html>
   <head>
-    <title>Sketches</title>
+    <title>Box</title>
     <style>
       body {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         font-family: "Helvetica Neue", system-ui, sans-serif;
         background: #f0f0f0;
+        margin: 0;
+        padding: 0;
       }
-
-      .container {
-        text-align: center;
+      #container {
+        margin: 0 auto;
+        padding: 2px 24px;
+        width: 100%;
+      }
+      #container button {
+        width: 128px;
+        height: 64px;
+        font-size: x-large;
+        background-color: transparent;
+        border: 1px solid black;
+        margin-right: 10px;
+      }
+      #container button:hover {
+        cursor: pointer;
+      }
+      #sketch_list li {
+        font-size: large;
+      }
+      #sketch_list li:hover {
+        cursor: pointer;
+        text-decoration: underline;
       }
     </style>
   </head>
 
   <body>
-    <div class="container">
-      <h1>Sketches</h1>
-
+    <div id="container">
+      <h1 id="heading">Box</h1>
       <button onclick="fetch('/prev')">Previous</button>
       <button onclick="fetch('/next')">Next</button>
-      <ul>
+      <ol id="sketch_list">
         <li onclick="fetch('/sketch/0')">Clock</li>
         <li onclick="fetch('/sketch/1')">Orbit W</li>
         <li onclick="fetch('/sketch/2')">Orbit B</li>
-      </ul>
+      </ol>
     </div>
   </body>
 </html>
