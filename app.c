@@ -7,6 +7,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <stdlib.h>
 
 int CURRENT_SKETCH = 0;
 
@@ -49,6 +50,19 @@ int main(void)
             {
                 CURRENT_SKETCH =
                     (CURRENT_SKETCH - 1 + TOTAL_SKETCHES) % TOTAL_SKETCHES;
+            }
+            else
+            {
+                char *prefix = strtok(command, " ");
+                char *value = strtok(NULL, " ");
+                if (prefix && value && strncmp(prefix, "SKETCH", strlen("SKETCH")) == 0)
+                {
+                    int sketch_index = atoi(value);
+                    if (sketch_index < TOTAL_SKETCHES && sketch_index >= 0)
+                    {
+                        CURRENT_SKETCH = sketch_index;
+                    }
+                }
             }
         }
 

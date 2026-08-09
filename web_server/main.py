@@ -26,5 +26,10 @@ def previous_sketch():
     send_command("PREV")
     return {"ok": True}
 
+@app.get("/sketch/<int:idx>")
+def set_sketch(idx):
+    send_command(f"SKETCH {idx}")
+    return {"ok": True}
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=1618)
