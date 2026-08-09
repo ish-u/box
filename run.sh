@@ -1,4 +1,10 @@
 #!/bin/bash
+set -e
+
+cd "$(dirname "$0")"
+
+git pull
+make
 
 uv --directory web_server run main.py &
 SERVER_PID=$!
