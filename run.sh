@@ -4,6 +4,7 @@ set -e
 cd "$(dirname "$0")"
 
 git pull
+uv --directory web_server sync
 make
 
 uv --directory web_server run main.py &
