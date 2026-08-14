@@ -1,5 +1,6 @@
 TARGET = app
 SRC    = app.c $(wildcard sketches/*.c)
+HEADERS = sketches.h
 
 UNAME_S := $(shell uname -s)
 
@@ -24,7 +25,7 @@ endif
 
 all: $(TARGET)
 
-$(TARGET): $(SRC)
+$(TARGET): $(SRC) $(HEADERS)
 	$(CC) $(CFLAGS) $(SRC) $(LIBS) $(LDFLAGS) -o $(TARGET)
 
 clean:
