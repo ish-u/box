@@ -66,6 +66,18 @@ int main(void)
             }
         }
 
+        // Key Input
+        if (IsKeyPressed(KEY_RIGHT))
+        {
+            CURRENT_SKETCH = (CURRENT_SKETCH + 1) % TOTAL_SKETCHES;
+        }
+
+        if (IsKeyPressed(KEY_LEFT))
+        {
+            CURRENT_SKETCH =
+                (CURRENT_SKETCH - 1 + TOTAL_SKETCHES) % TOTAL_SKETCHES;
+        }
+
         // Sketch Switch
         BeginDrawing();
         SKETCHES[CURRENT_SKETCH]();
