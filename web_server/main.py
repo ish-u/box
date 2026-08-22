@@ -24,11 +24,19 @@ def on_message(ws, message):
             "total_duration": decorations["playback"]["duration_ms"],
             "current_duration": data["position"]["position_ms"],
         }
+        playback_state = (
+            f"{song['name']}|"
+            f"{song['album_name']}|"
+            f"{song['album_art']}|"
+            f"{song['playback_status']}|"
+            f"{song['total_duration']}|"
+            f"{song['current_duration']}\n"
+        )
         print(json.dumps(song, indent=2))
         if song["name"]:
             fd = os.open(SOLOIST_PIPE, os.O_WRONLY)
             try:
-                os.write(fd, f"{song["name"]}\n".encode())
+                os.write(fd, f"{playback_state}\n".encode())
             finally:
                 os.close(fd)
         return song

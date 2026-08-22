@@ -44,8 +44,29 @@ void read_soloist_pipe()
         if (n > 0)
         {
             command[n] = '\0';
-            strcpy(CURRENT_STATE.name, command);
-            printf("%s", CURRENT_STATE.name);
+            char *name = strtok(command, "|");
+            char *album = strtok(NULL, "|");
+            char *art = strtok(NULL, "|");
+            char *status = strtok(NULL, "|");
+            char *total = strtok(NULL, "|");
+            char *current = strtok(NULL, "|");
+            if (!name || !album || !art || !status || !total || !current)
+                return;
+
+            snprintf(CURRENT_STATE.name,
+                     sizeof(CURRENT_STATE.name),
+                     "%s", name);
+            snprintf(CURRENT_STATE.album_name,
+                     sizeof(CURRENT_STATE.album_name),
+                     "%s", album);
+            snprintf(CURRENT_STATE.album_art,
+                     sizeof(CURRENT_STATE.album_art),
+                     "%s", art);
+            snprintf(CURRENT_STATE.playback_status,
+                     sizeof(CURRENT_STATE.playback_status),
+                     "%s", status);
+            CURRENT_STATE.total_duration = atoi(total);
+            CURRENT_STATE.current_duration = atoi(current);
         }
     }
 }
@@ -63,10 +84,29 @@ void sketch_soloist()
     ClearBackground(WHITE);
 
     int font_size = GetScreenWidth() / 16;
-    int text_width = MeasureText(CURRENT_STATE.name, font_size);
 
-    int x = GetScreenWidth() / 2 - text_width / 2;
-    int y = GetScreenHeight() / 2 - font_size / 2;
+    int song_width = MeasureText(CURRENT_STATE.name, font_size);
+    int album_font_size = font_size / 2;
+    int album_width = MeasureText(CURRENT_STATE.album_name, album_font_size);
 
-    DrawText(CURRENT_STATE.name, x, y, font_size, BLACK);
+    int song_x = GetScreenWidth() / 2 - song_width / 2;
+    int album_x = GetScreenWidth() / 2 - album_width / 2;
+
+    int y = GetScreenHeight() / 2 - font_size;
+
+    DrawText(
+        CURRENT_STATE.name,
+        song_x,
+        y,
+        font_size,
+        BLACK);
+
+    y += font_size;
+
+    DrawText(
+        CURRENT_STATE.album_name,
+        album_x,
+        y,
+        album_font_size,
+        BLACK);
 }
