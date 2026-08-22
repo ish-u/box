@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include "sketches.h"
-#include <math.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
