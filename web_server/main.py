@@ -6,17 +6,19 @@ import json
 from urllib.request import urlopen
 import ssl
 import certifi
+from PIL import Image
+from io import BytesIO
 
 # WS CLIENT
 SOLOIST_PIPE = "/tmp/soloist"
 
 
 def download_album_art(url: str):
-    path = f'/tmp/{url.split("/")[-1]}.jpg'
+    path = f'/tmp/{url.split("/")[-1]}.png'
     context = ssl.create_default_context(cafile=certifi.where())
     with urlopen(url, context=context) as response:
-        with open(path, "wb") as f:
-            f.write(response.read())
+        image = Image.open(BytesIO(response.read()))
+        image.save(path, "PNG")
     return path
 
 def on_message(ws, message):
@@ -71,7 +73,7 @@ def on_open(ws):
 
 def listen_soloist_ws():
     ws = websocket.WebSocketApp(
-        "ws://127.0.0.1:5010",
+        "ws://asdf.local:5010",
         on_open=on_open,
         on_message=on_message,
         on_error=on_error,
