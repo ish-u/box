@@ -84,6 +84,24 @@ void read_soloist_pipe()
     }
 }
 
+void truncate_text(char *text, int font_size, int max_width, char *truncated_text, int truncated_text_size)
+{
+    snprintf(truncated_text, truncated_text_size, "%s", text);
+    if (MeasureText(truncated_text, font_size) > max_width)
+    {
+        int text_len = strlen(text);
+        while (text_len > 0)
+        {
+            snprintf(truncated_text, truncated_text_size, "%.*s...", text_len, text);
+            if (MeasureText(truncated_text, font_size) <= max_width)
+            {
+                return;
+            }
+            text_len--;
+        }
+    }
+}
+
 void sketch_soloist()
 {
     if (SOLOIST_PIPE == 0)
@@ -101,8 +119,10 @@ void sketch_soloist()
     int artist_font_size = song_font_size / 2;
 
     int spacing = song_font_size / 8;
-    int x = GetScreenWidth() / 16;
+    int margin = GetScreenWidth() / 16;
+    int x = margin;
     int y = GetScreenHeight() - (song_font_size + album_font_size + artist_font_size + 4 * spacing);
+    int max_allowed_width = GetScreenWidth() - 2 * margin;
 
     if (CURRENT_STATE.album_art_texture.id != 0)
     {
@@ -112,24 +132,42 @@ void sketch_soloist()
         DrawTexture(texture, album_art_x, album_art_y, WHITE);
     }
 
+    char truncated_album_name[256];
+    truncate_text(CURRENT_STATE.album_name,
+                  song_font_size,
+                  max_allowed_width,
+                  truncated_album_name,
+                  sizeof(truncated_album_name));
     DrawText(
-        CURRENT_STATE.album_name,
+        truncated_album_name,
         x,
         y,
         album_font_size,
         BLACK);
     y += album_font_size + spacing;
 
+    char truncated_name[256];
+    truncate_text(CURRENT_STATE.name,
+                  song_font_size,
+                  max_allowed_width,
+                  truncated_name,
+                  sizeof(truncated_name));
     DrawText(
-        CURRENT_STATE.name,
+        truncated_name,
         x,
         y,
         song_font_size,
         BLACK);
     y += song_font_size + spacing;
 
+    char truncated_artist_name[512];
+    truncate_text(CURRENT_STATE.artist_name,
+                  song_font_size,
+                  max_allowed_width,
+                  truncated_artist_name,
+                  sizeof(truncated_artist_name));
     DrawText(
-        CURRENT_STATE.artist_name,
+        truncated_artist_name,
         x,
         y,
         artist_font_size,
