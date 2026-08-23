@@ -10,7 +10,7 @@ make
 uv --directory web_server run main.py &
 SERVER_PID=$!
 
-soloist -n "box" -k "$SOLOIST_API_KEY" -w "127.0.0.1:1618" &
+soloist -n "box" -k "$SOLOIST_API_KEY" -w "127.0.0.1:5010" &
 SOLOIST_PID=$!
 
 GPIO_PID=""

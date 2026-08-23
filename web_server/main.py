@@ -54,7 +54,7 @@ def on_open(ws):
 
 def listen_soloist_ws():
     ws = websocket.WebSocketApp(
-        "ws:/127.0.0.1:1618",
+        "ws:/127.0.0.1:5010",
         on_open=on_open,
         on_message=on_message,
         on_error=on_error,
