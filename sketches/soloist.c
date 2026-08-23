@@ -134,7 +134,7 @@ void sketch_soloist()
 
     char truncated_album_name[256];
     truncate_text(CURRENT_STATE.album_name,
-                  song_font_size,
+                  album_font_size,
                   max_allowed_width,
                   truncated_album_name,
                   sizeof(truncated_album_name));
@@ -162,7 +162,7 @@ void sketch_soloist()
 
     char truncated_artist_name[512];
     truncate_text(CURRENT_STATE.artist_name,
-                  song_font_size,
+                  artist_font_size,
                   max_allowed_width,
                   truncated_artist_name,
                   sizeof(truncated_artist_name));
