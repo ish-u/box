@@ -3,9 +3,21 @@ import os
 import websocket
 import threading
 import json
+from urllib.request import urlopen
+import ssl
+import certifi
 
 # WS CLIENT
 SOLOIST_PIPE = "/tmp/soloist"
+
+
+def download_album_art(url: str):
+    path = f'/tmp/{url.split("/")[-1]}.jpg'
+    context = ssl.create_default_context(cafile=certifi.where())
+    with urlopen(url, context=context) as response:
+        with open(path, "wb") as f:
+            f.write(response.read())
+    return path
 
 def on_message(ws, message):
     data = json.loads(message)
@@ -32,7 +44,7 @@ def on_message(ws, message):
             f"{song['name']}|"
             f"{song['album_name']}|"
             f"{song['artist_name']}|"
-            f"{song['album_art']}|"
+            f"{download_album_art(song['album_art'])}|"
             f"{song['playback_status']}|"
             f"{song['total_duration']}|"
             f"{song['current_duration']}\n"
