@@ -16,8 +16,8 @@ int SOLOIST_PIPE = 0;
 struct
 {
     char name[256];
-    // TODO -
     char album_name[256];
+    char artist_name[512];
     char album_art[512];
     char playback_status[32];
     int total_duration;
@@ -46,6 +46,7 @@ void read_soloist_pipe()
             command[n] = '\0';
             char *name = strtok(command, "|");
             char *album = strtok(NULL, "|");
+            char *artist = strtok(NULL, "|");
             char *art = strtok(NULL, "|");
             char *status = strtok(NULL, "|");
             char *total = strtok(NULL, "|");
@@ -59,6 +60,9 @@ void read_soloist_pipe()
             snprintf(CURRENT_STATE.album_name,
                      sizeof(CURRENT_STATE.album_name),
                      "%s", album);
+            snprintf(CURRENT_STATE.artist_name,
+                     sizeof(CURRENT_STATE.artist_name),
+                     "%s", artist);
             snprintf(CURRENT_STATE.album_art,
                      sizeof(CURRENT_STATE.album_art),
                      "%s", art);
@@ -83,30 +87,34 @@ void sketch_soloist()
     }
     ClearBackground(WHITE);
 
-    int font_size = GetScreenWidth() / 16;
+    int song_font_size = GetScreenWidth() / 16;
+    int album_font_size = song_font_size / 4;
+    int artist_font_size = song_font_size / 2;
 
-    int song_width = MeasureText(CURRENT_STATE.name, font_size);
-    int album_font_size = font_size / 2;
-    int album_width = MeasureText(CURRENT_STATE.album_name, album_font_size);
-
-    int song_x = GetScreenWidth() / 2 - song_width / 2;
-    int album_x = GetScreenWidth() / 2 - album_width / 2;
-
-    int y = GetScreenHeight() / 2 - font_size;
-
-    DrawText(
-        CURRENT_STATE.name,
-        song_x,
-        y,
-        font_size,
-        BLACK);
-
-    y += font_size;
+    int spacing = song_font_size / 8;
+    int x = GetScreenWidth() / 16;
+    int y = GetScreenHeight() - (song_font_size + album_font_size + artist_font_size + 12 * spacing);
 
     DrawText(
         CURRENT_STATE.album_name,
-        album_x,
+        x,
         y,
         album_font_size,
+        BLACK);
+    y += album_font_size + spacing;
+
+    DrawText(
+        CURRENT_STATE.name,
+        x,
+        y,
+        song_font_size,
+        BLACK);
+    y += song_font_size + spacing;
+
+    DrawText(
+        CURRENT_STATE.artist_name,
+        x,
+        y,
+        artist_font_size,
         BLACK);
 }

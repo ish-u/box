@@ -15,6 +15,10 @@ def on_message(ws, message):
         song = {
             "name": decorations["identity"]["name"],
             "album_name": decorations["parent"]["entity"]["decorations"]["identity"]["name"],
+            "artist_name": ", ".join(
+                    creator["entity"]["decorations"]["identity"]["name"]
+                    for creator in decorations["creators"]
+            ),
             "album_art": next(
                 cover["url"]
                 for cover in decorations["visual_identity"]["cover"]
@@ -27,6 +31,7 @@ def on_message(ws, message):
         playback_state = (
             f"{song['name']}|"
             f"{song['album_name']}|"
+            f"{song['artist_name']}|"
             f"{song['album_art']}|"
             f"{song['playback_status']}|"
             f"{song['total_duration']}|"
