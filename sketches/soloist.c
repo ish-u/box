@@ -22,6 +22,7 @@ struct
     char playback_status[32];
     int total_duration;
     int current_duration;
+    Texture2D album_art_texture;
 } CURRENT_STATE = {0};
 
 void init_soloist_pipe()
@@ -71,6 +72,14 @@ void read_soloist_pipe()
                      "%s", status);
             CURRENT_STATE.total_duration = atoi(total);
             CURRENT_STATE.current_duration = atoi(current);
+
+            if (strlen(CURRENT_STATE.album_art) > 0)
+            {
+                Image image = LoadImage(CURRENT_STATE.album_art);
+                Texture2D texture = LoadTextureFromImage(image);
+                CURRENT_STATE.album_art_texture = texture;
+                UnloadImage(image);
+            }
         }
     }
 }
@@ -93,7 +102,15 @@ void sketch_soloist()
 
     int spacing = song_font_size / 8;
     int x = GetScreenWidth() / 16;
-    int y = GetScreenHeight() - (song_font_size + album_font_size + artist_font_size + 12 * spacing);
+    int y = GetScreenHeight() - (song_font_size + album_font_size + artist_font_size + 4 * spacing);
+
+    if (CURRENT_STATE.album_art_texture.id != 0)
+    {
+        Texture2D texture = CURRENT_STATE.album_art_texture;
+        int album_art_x = x;
+        int album_art_y = y - texture.height - 4 * spacing;
+        DrawTexture(texture, album_art_x, album_art_y, WHITE);
+    }
 
     DrawText(
         CURRENT_STATE.album_name,
