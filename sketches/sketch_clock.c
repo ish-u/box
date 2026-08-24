@@ -2,8 +2,22 @@
 #include <time.h>
 #include <stdio.h>
 
+int IS_INIT = 0;
+Font NotoSans;
+
+void init()
+{
+    NotoSans = LoadFontEx("./assets/Inter.ttf", GetScreenWidth(), 0, 250);
+    SetTextureFilter(NotoSans.texture, TEXTURE_FILTER_BILINEAR);
+}
+
 void sketch_clock(void)
 {
+    if (!IS_INIT)
+    {
+        IS_INIT = 1;
+        init();
+    }
     time_t rawtime;
     struct tm *timeinfo;
     time(&rawtime);
@@ -16,10 +30,22 @@ void sketch_clock(void)
     ClearBackground(WHITE);
 
     int font_size = GetScreenWidth() / 4;
-    int text_width = MeasureText(clock_str, font_size);
+    Vector2 text_size = MeasureTextEx(
+        NotoSans,
+        clock_str,
+        font_size,
+        2);
 
-    int x = GetScreenWidth() / 2 - text_width / 2;
-    int y = GetScreenHeight() / 2 - font_size / 2;
+    float x = (GetScreenWidth() - text_size.x) / 2.0f;
+    float y = (GetScreenHeight() - text_size.y) / 2.0f;
 
-    DrawText(clock_str, x, y, font_size, BLACK);
+    DrawTextEx(NotoSans,
+               clock_str,
+               (Vector2){
+                   x,
+                   y,
+               },
+               font_size,
+               2,
+               BLACK);
 }

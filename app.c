@@ -24,10 +24,10 @@ int main(void)
     pipe_fd = open("/tmp/pipe", O_RDONLY | O_NONBLOCK);
 
     // Raylib Initial Config
+    SetConfigFlags(FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT | FLAG_FULLSCREEN_MODE);
     const int monitor = 0;
     const int screenWidth = GetMonitorWidth(monitor) ? GetMonitorWidth(monitor) : 1920;
     const int screenHeight = GetMonitorHeight(monitor) ? GetMonitorHeight(monitor) : 1080;
-    SetConfigFlags(FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT | FLAG_FULLSCREEN_MODE);
     InitWindow(screenWidth, screenHeight, "init");
     SetTargetFPS(60);
 
