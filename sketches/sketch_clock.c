@@ -7,7 +7,7 @@ Font NotoSans;
 
 void init()
 {
-    NotoSans = LoadFontEx("./assets/Inter.ttf", GetScreenWidth(), 0, 250);
+    NotoSans = LoadFontEx("./assets/Inter.ttf", GetScreenWidth(), 0, 95);
     SetTextureFilter(NotoSans.texture, TEXTURE_FILTER_BILINEAR);
 }
 
