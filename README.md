@@ -31,6 +31,12 @@ Give life to your old monitors with a Raspbery Pi!
   $ sudo ldconfig
   ```
 
+- Install `libjpeg` - required for [Pillow](https://pillow.readthedocs.io/en/stable/) to install
+
+  ```bash
+  $ sudo apt install libjpeg-dev
+  ```
+
 - Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
 
   ```bash
