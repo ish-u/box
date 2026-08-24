@@ -3,12 +3,12 @@
 #include <stdio.h>
 
 int IS_INIT = 0;
-Font NotoSans;
+Font Inter;
 
 void init()
 {
-    NotoSans = LoadFontEx("./assets/Inter.ttf", GetScreenWidth(), 0, 95);
-    SetTextureFilter(NotoSans.texture, TEXTURE_FILTER_BILINEAR);
+    Inter = LoadFontEx("./assets/Inter.ttf", 280, 0, 95);
+    SetTextureFilter(Inter.texture, TEXTURE_FILTER_BILINEAR);
 }
 
 void sketch_clock(void)
@@ -31,7 +31,7 @@ void sketch_clock(void)
 
     int font_size = GetScreenWidth() / 4;
     Vector2 text_size = MeasureTextEx(
-        NotoSans,
+        Inter,
         clock_str,
         font_size,
         2);
@@ -39,7 +39,7 @@ void sketch_clock(void)
     float x = (GetScreenWidth() - text_size.x) / 2.0f;
     float y = (GetScreenHeight() - text_size.y) / 2.0f;
 
-    DrawTextEx(NotoSans,
+    DrawTextEx(Inter,
                clock_str,
                (Vector2){
                    x,
